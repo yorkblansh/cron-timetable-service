@@ -1,0 +1,18 @@
+# deps
+node_modules/
+dist/
+esp_firmwares
+
+# other misc
+package-lock.json
+pnpm-lock.yaml
+
+# yarn misc
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+yarn.lock

@@ -1,0 +1,3 @@
+[submodule "src/app/vars-ts"]
+	path = src/app/vars-ts
+	url = git@github.com:DoSomeLight/vars-ts.git
