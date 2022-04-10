@@ -2,21 +2,30 @@ import { onEvent } from './app/net/onEvent'
 import { TaskManager } from './app/Tasker'
 import { TaskEvents } from './app/vars-ts/net'
 import { ConvertEnum } from './app/vars-ts/fns'
+import { every } from 'node-cron-expression'
+import CronJobManager from 'cron-job-manager'
+import { ITMmethods } from './app/Tasker'
 
 const startService = () => {
-	const taskEventsArray = ConvertEnum(TaskEvents).toArray_Of_OBJECTS()
-	const taskManager = new TaskManager()
+	// const cron2 = every(2).minutes().
 
-	console.dir('STAAARTTT')
+	const cronexp = '*/10 * * * * *'
+	const TaskEventsArray = ConvertEnum(TaskEvents).toArray_Of_OBJECTS()
+	const taskManager = new TaskManager('device_schedules', cronexp.toString())
 
-	taskEventsArray.map(({ value: taskEvent }) => {
-		onEvent(taskEvent, taskProps => taskManager[taskEvent](taskProps))
-	})
-
-	// onEvent(ADD_TASK, taskProps => tm.addTask(taskProps))
-	// onEvent(START_TASK, taskProps => tm.startTask(taskProps))
-	// onEvent(STOP_TASK, taskProps => tm.stopTask(taskProps))
-	// onEvent(UPDATE_TASK, taskProps => tm.updateTask(taskProps))
+	console.dir('device_schedules started')
+	TaskEventsArray.map(({ value: taskEvent }) => onEvent(taskEvent, taskProps => taskManager[taskEvent](taskProps)))
+	// taskManager.perf['ADD_TASK']({
+	// 	job_key: 'tt',
+	// 	cron_exp: '*/2 * * * * *',
+	// 	task: 'tt',
+	// })
+	// taskManager.perf['START_TASK']({ job_key: 'tt' })
+	// taskManager.addTASK({
+	// 	job_key: 'tt',
+	// 	cron_exp: '*/2 * * * * *',
+	// 	task: 'tt',
+	// })
 }
 
 startService()
