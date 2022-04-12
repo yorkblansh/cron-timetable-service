@@ -1,3 +1,6 @@
+# # vars-ts
+src/app/vars-ts/
+
 # deps
 node_modules/
 dist/
