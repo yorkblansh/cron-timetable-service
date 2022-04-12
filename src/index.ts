@@ -1,22 +1,21 @@
-import { onEvent } from './app/net/onEvent'
-import { TaskManager } from './app/Tasker'
-import { TaskEvents } from './app/vars-ts/net'
 import { ConvertEnum } from './app/vars-ts/fns'
+import { TaskEventsEnum } from './app/vars-ts/cron-task-manager'
+import { localTieBus } from './app/TieBus'
+import { newTaskManager } from './app/TaskManager'
 
 const startService = () => {
-	const taskEventsArray = ConvertEnum(TaskEvents).toArray_Of_OBJECTS()
-	const taskManager = new TaskManager()
-
-	console.dir('STAAARTTT')
+	const taskEventsArray = ConvertEnum(TaskEventsEnum).toObjectArray()
+	const DevicesTaskManager = newTaskManager({
+		task_manager_key: 'device_schedules',
+		cronexp: '0/5 * * * * *',
+	})
+	const TieBus = localTieBus()
 
 	taskEventsArray.map(({ value: taskEvent }) => {
-		onEvent(taskEvent, taskProps => taskManager[taskEvent](taskProps))
+		TieBus.onEvent(taskEvent, taskProps => {
+			DevicesTaskManager[taskEvent](taskProps)
+		})
 	})
-
-	// onEvent(ADD_TASK, taskProps => tm.addTask(taskProps))
-	// onEvent(START_TASK, taskProps => tm.startTask(taskProps))
-	// onEvent(STOP_TASK, taskProps => tm.stopTask(taskProps))
-	// onEvent(UPDATE_TASK, taskProps => tm.updateTask(taskProps))
 }
 
 startService()
