@@ -10,7 +10,8 @@
 		"start": "./.yarn/sdks/eslint/bin/eslint.js src/ && tsc && node dist/index.js",
 		"build": "./.yarn/sdks/eslint/bin/eslint.js src/ && tsc",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"clear": "rm yarn.lock && rm .pnp.cjs && rm .pnp.loader.mjs && rm .yarn/cache/ -R"
+		"clear": "rm yarn.lock && rm .pnp.cjs && rm .pnp.loader.mjs && rm .yarn/cache/ -R",
+		"postinstall": "git submodule add git@github.com:DoSomeLight/vars-ts.git src/app/vars-ts"
 	},
 	"devDependencies": {
 		"@types/async": "^3.2.9",
