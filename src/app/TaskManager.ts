@@ -1,13 +1,13 @@
 /* eslint-disable prefer-const */
 import CronJobManager from 'cron-job-manager'
-import { TimeTable } from './vars-ts/node-timetable'
+import { TaskManager } from './vars-ts/node-timetable'
 
 interface TaskManagerProps {
 	task_manager_key: string
 	cronexp?: string
 }
 
-export const TaskManager = ({ cronexp, task_manager_key }: TaskManagerProps): TimeTable => {
+export const TaskManagerInstance = ({ cronexp, task_manager_key }: TaskManagerProps): TaskManager => {
 	const manager = new CronJobManager(
 		task_manager_key,
 		cronexp ? cronexp : '0/5 * * * * *',
@@ -25,5 +25,5 @@ export const TaskManager = ({ cronexp, task_manager_key }: TaskManagerProps): Ti
 		START_TASK: ({ job_key }) => manager.start(job_key),
 		STOP_TASK: ({ job_key }) => manager.stop(job_key),
 		UPDATE_TASK: ({ cron_exp, job_key, task }) => manager.update(job_key, cron_exp, () => console.dir(task)),
-	} as TimeTable
+	} as TaskManager
 }
