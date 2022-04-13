@@ -1,11 +1,11 @@
 import { ConvertEnum } from './app/vars-ts/fns'
-import { TaskEventsEnum } from './app/vars-ts/cron-task-manager'
+import { TaskEventsEnum } from './app/vars-ts/node-timetable'
 import { localTieBus } from './app/TieBus'
-import { newTaskManager } from './app/TaskManager'
+import { TaskManager } from './app/TaskManager'
 
 const startService = () => {
 	const taskEventsArray = ConvertEnum(TaskEventsEnum).toObjectArray()
-	const DevicesTaskManager = newTaskManager({
+	const DevicesTaskManager = TaskManager({
 		task_manager_key: 'device_schedules',
 		cronexp: '0/5 * * * * *',
 	})

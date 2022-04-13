@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { io } from 'socket.io-client'
-import { TaskEventsEnum, TaskPropsInterface } from './vars-ts/cron-task-manager'
-import { TieBus } from './vars-ts/tie-bus'
+import { TaskEventsEnum, TaskPropsInterface } from './vars-ts/node-timetable'
+import { TieBus } from './vars-ts/tiebus'
 
 const socket = io('localhost/tasker')
 
