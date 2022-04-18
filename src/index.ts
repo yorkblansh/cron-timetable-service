@@ -3,7 +3,7 @@ import { TaskEventsEnum } from './app/vars-ts/node-timetable'
 import { localTieBus } from './app/TieBus'
 import { TaskManagerInstance } from './app/TaskManager'
 
-const startService = () => {
+const startTimeTableService = () => {
 	const taskEventsArray = ConvertEnum(TaskEventsEnum).toObjectArray()
 	const DevicesTaskManager = TaskManagerInstance({
 		task_manager_key: 'device_schedules',
@@ -18,4 +18,4 @@ const startService = () => {
 	})
 }
 
-startService()
+startTimeTableService()
