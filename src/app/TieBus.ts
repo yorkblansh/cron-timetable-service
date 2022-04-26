@@ -7,11 +7,9 @@ const socket = io('localhost/tasker')
 
 export const localTieBus = () =>
 	({
-		onEvent: (event: TaskEventsEnum, cb: (task_obj: TaskProps) => void) => {
-			socket.on(event, task_obj => cb(task_obj))
+		onEvent: (event: keyof typeof TaskEventsEnum, cb: (task_obj: TaskProps) => void) => {
 		},
-		emit: (event: TaskEventsEnum, task_obj: TaskProps) => {
-			socket.emit(event, task_obj)
+		emit: (event: keyof typeof TaskEventsEnum, task_obj: TaskProps) => {
 		},
 		UNSAFE_socket: socket,
 	} as TieBus<typeof socket>)
