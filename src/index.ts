@@ -5,11 +5,14 @@ import { TaskManagerInstance } from './app/TaskManager'
 
 const startTimeTableService = () => {
 	const taskEventsArray = ConvertEnum(TaskEventsEnum).toObjectArray()
-	const DevicesTaskManager = TaskManagerInstance({
+	const TieBus = localTieBus()
+
+	const DevicesTaskManager = new TaskManagerInstance({
 		task_manager_key: 'device_schedules',
 		cronexp: '0/5 * * * * *',
+		exec: TieBus.emit,
+		logger: console.dir,
 	})
-	const TieBus = localTieBus()
 
 	taskEventsArray.map(({ value: taskEvent }) => {
 		TieBus.onEvent(taskEvent, taskProps => {
