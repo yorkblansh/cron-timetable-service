@@ -15,7 +15,7 @@ const startTimeTableService = () => {
 	})
 
 	taskEventsArray.map(({ value: taskEvent }) => {
-		TieBus.onEvent(taskEvent, taskProps => {
+		TieBus.timetable.onEvent(taskEvent, taskProps => {
 			DevicesTaskManager[taskEvent](taskProps)
 		})
 	})
