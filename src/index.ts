@@ -10,7 +10,7 @@ const startTimeTableService = () => {
 	const DevicesTaskManager = new TaskManagerInstance({
 		task_manager_key: 'device_schedules',
 		cronexp: '0/5 * * * * *',
-		exec: TieBus.emit,
+		exec: TieBus.executor.emit,
 		logger: console.dir,
 	})
 
