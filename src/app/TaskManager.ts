@@ -6,14 +6,14 @@ import { TieBus } from './vars-ts/tiebus'
 interface TaskManagerProps {
 	task_manager_key: string
 	cronexp?: string
-	exec: TieBus['emit']
+	exec: TieBus['executor']['emit']
 	logger: any
 }
 
 export class TaskManagerInstance implements TaskManager {
 	private manager: CronJobManager
 	private logger: any
-	private exec: TieBus['emit']
+	private exec: TieBus['executor']['emit']
 
 	constructor({ cronexp, task_manager_key, exec, logger }: TaskManagerProps) {
 		this.manager = new CronJobManager(
@@ -31,9 +31,9 @@ export class TaskManagerInstance implements TaskManager {
 		this.logger = logger
 	}
 
-	public ADD_TASK({ job_key, cron_exp, task }: TaskProps): void {
+	public ADD_TASK({ job_key, cron_exp, action }: TaskProps): void {
 		this.manager.add(job_key, cron_exp, () => {
-			this.exec('ADD_TASK', { job_key, cron_exp, task })
+			this.exec('listen_exec', action)
 		})
 	}
 
@@ -45,9 +45,9 @@ export class TaskManagerInstance implements TaskManager {
 		this.manager.stop(job_key)
 	}
 
-	public UPDATE_TASK({ job_key, cron_exp, task }: TaskProps): void {
+	public UPDATE_TASK({ job_key, cron_exp, action }: TaskProps): void {
 		this.manager.update(job_key, cron_exp, () => {
-			this.exec('UPDATE_TASK', { job_key, cron_exp, task })
+			this.exec('listen_exec', action)
 		})
 	}
 }
